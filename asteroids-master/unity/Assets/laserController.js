@@ -1,5 +1,6 @@
 #pragma strict
 var laserSpeed:int;
+
 function Start () {
 
 }
@@ -19,5 +20,7 @@ function OnTriggerEnter(other:Collider)
 	if(other.gameObject.tag == "asteroid")
 	{
 		Destroy(other.gameObject);
+		spaceshipController.score++;		
 	}
 }
+

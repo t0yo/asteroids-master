@@ -4,6 +4,7 @@ var rotation:int;
 var turbo:int;
 var normalSpeed:int;
 var laserPrefab:Rigidbody;
+static var score:int;
 
 function Start () {
 	lives = 3;
@@ -55,7 +56,7 @@ function OnTriggerEnter(other:Collider)
 		lives--;
 		if(lives == 0)
 		{
-			Destroy(this.gameObject);
+			Application.LoadLevel(0);
 		}
 	}	
 }
@@ -64,4 +65,6 @@ function OnGUI()
 {
 	GUI.Label(Rect(5,5,50,25), "Lives: "+lives);
 	GUI.Label(Rect(5,30,100,25), "Speed: "+speed);
+	GUI.Label(Rect(5,60,100,25), "Score: "+score);
+	GUI.Label(Rect(5,90,100,25), "Time: "+asteroidGenerator.elapsedTime);
 }

@@ -1,9 +1,13 @@
 #pragma strict
-var direction:int;
+var directionX:int;
+var directionY:int;
+var direction:Vector3;
 function Start () {
-
-	direction = Mathf.Round(Random.Range(1,3));
-	Debug.Log(direction);
+	directionX = Random.Range(-5,5);
+	directionY = Random.Range(-5,5);
+	
+	direction = Vector3(directionX, directionY, 0);
+	
 }
 
 function Update () {
@@ -12,27 +16,28 @@ function Update () {
 	var bottom = Camera.main.ScreenToWorldPoint(Vector3(Screen.width,Screen.height,0)).y;
 	var top = Camera.main.ScreenToWorldPoint(Vector3(0,0,0)).y;
 
-	transform.Rotate(Vector3.forward*50*Time.deltaTime);
+	transform.Rotate(Vector3.forward*50*Time.deltaTime);	
 	
-	if(direction == 1)
-	{
-		transform.Translate(Vector3.left*5*Time.deltaTime,Space.World);
-	}
-	if(direction == 2)
-	{
-		transform.Translate(Vector3.right*5*Time.deltaTime,Space.World);
-	}
+	transform.Translate(direction*Time.deltaTime, Space.World);	
 	
 	if(transform.position.x < leftmost)
-		Destroy(this.gameObject);
+		transform.position.x = rightmost;
 		
 	if(transform.position.x > rightmost)
-		Destroy(this.gameObject);
+		transform.position.x = leftmost;
 		
 	if(transform.position.y > bottom)
-		Destroy(this.gameObject);
+		transform.position.y = top;
 		
 	if(transform.position.y < top)
-		Destroy(this.gameObject);
+		transform.position.y = bottom;	
 	
+}
+
+function OnTriggerEnter(other:Collider)
+{
+	if(other.gameObject.tag == "asteroid")
+	{
+		Destroy(this.gameObject);
+	}
 }
